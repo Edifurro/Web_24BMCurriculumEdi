@@ -1,0 +1,76 @@
+﻿@model List<Contacto>
+
+<section class="container mx-auto my-5">
+     <article class="row">
+        
+        @if (TempData["Eliminado"] != null)
+        {
+            @if ((bool)TempData["Eliminado"])
+            {
+                <div class="alert alert-success" role="alert">
+                    Eliminado correctamente
+                </div>
+            }
+        }
+
+        @if (TempData["Actualizado"] != null)
+        {
+            @if ((bool)TempData["Actualizado"])
+            {
+                <div class="alert alert-success" role="alert">
+                    Actualizado correctamente
+                </div>
+            }
+        }
+        
+        
+        <div class="col-12 mb-5">
+            <a class="btn btn-primary" href="/Validaciones">Crear Curriculum</a>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">Objetivos</th>
+                    <th scope="col">Fecha De Nacimiento</th>
+                    <th scope="col">Foto</th>
+                    <th scope="col"> Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <th scope="row"> @(i+1) </th>
+                        <td> @Model[i].Nombre </td>
+                        <td> @Model[i].Apellidos </td>
+                        <td> @Model[i].Email </td>
+                        <td> @Model[i].Direccion </td>
+                        <td> @Model[i].Objetivo </td>
+                        <td> @Model[i].FechaNacimiento </td>
+                        <td>
+                            <img src="/uploads/@Model[i].Foto" width="100" />
+                        </td>
+                        <td>
+                            <form method="post" asp-action="EliminarCurriculum">
+                                <button value="@Model[i].Id" name="id" type="submit" class="btn btn-danger">
+                                    Borrar
+                                </button>
+                            </form>
+                            <form method="post" asp-action="ActualizarCurriculum">
+                                <button value="@Model[i].Id" name="id" type="submit" class="btn btn-secondary mt-2">
+                                    Editar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+     </article>
+</section>
